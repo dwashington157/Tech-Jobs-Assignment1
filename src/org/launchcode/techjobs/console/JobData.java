@@ -18,11 +18,12 @@ public class JobData {
 
     private static final String DATA_FILE = "resources/job_data.csv";
     private static Boolean isDataLoaded = false;
-
+    public static String findByValue;
     private static ArrayList<HashMap<String, String>> allJobs;
 
     /**
      * Fetch list of all values from loaded data,
+     *
      * without duplicates, for a given column.
      *
      * @param field The column to retrieve values from
@@ -52,6 +53,28 @@ public class JobData {
         loadData();
 
         return allJobs;
+    }
+
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+
+        // load data, if not already loaded
+        loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs) {
+
+            for(String aValue : row.values()){
+                if (aValue.toLowerCase().contains(value.toLowerCase())) {
+                    jobs.add(row);
+                }
+
+            }
+
+
+        }
+
+        return jobs;
     }
 
     /**
@@ -126,3 +149,4 @@ public class JobData {
     }
 
 }
+
